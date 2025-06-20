@@ -1,58 +1,25 @@
 package com.rutas.rutasBack.entidad;
 
+import java.util.List;
+
 public class CaminoDTO {
-    private int seq;
-    private int pathSeq;
-    private int node;
-    private int edge;
-    private double cost;
-    private double aggCost;
+    private List<Integer> caminoOut;  // para el array de enteros
+    private int distanciaOut;
 
-    public int getSeq() {
-        return seq;
+    // Getters y setters
+    public List<Integer> getCaminoOut() {
+        return caminoOut;
     }
 
-    public void setSeq(int seq) {
-        this.seq = seq;
+    public void setCaminoOut(List<Integer> caminoOut) {
+        this.caminoOut = caminoOut;
     }
 
-    public int getPathSeq() {
-        return pathSeq;
+    public int getDistanciaOut() {
+        return distanciaOut;
     }
 
-    public void setPathSeq(int pathSeq) {
-        this.pathSeq = pathSeq;
-    }
-
-    public int getNode() {
-        return node;
-    }
-
-    public void setNode(int node) {
-        this.node = node;
-    }
-
-    public int getEdge() {
-        return edge;
-    }
-
-    public void setEdge(int edge) {
-        this.edge = edge;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    public double getAggCost() {
-        return aggCost;
-    }
-
-    public void setAggCost(double aggCost) {
-        this.aggCost = aggCost;
+    public void setDistanciaOut(int distanciaOut) {
+        this.distanciaOut = distanciaOut;
     }
 }

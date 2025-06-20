@@ -1,29 +1,46 @@
 package com.rutas.rutasBack.servicios;
 
 import com.rutas.rutasBack.entidad.CaminoDTO;
-import com.rutas.rutasBack.repositorio.GrafoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class NavegacionServicio {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private GrafoRepository grafoRepository;
+    public NavegacionServicio(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-    public List<CaminoDTO> obtenerCamino(int inicio, int fin) {
-        List<Object[]> resultado = grafoRepository.obtenerCaminoMasCorto(inicio, fin);
-        return grafoRepository.mapearResultado(resultado);
+    public List<CaminoDTO> buscarCamino(int origen, int destino, int combustible) {
+        String sql = "SELECT * FROM buscar_camino(?, ?, ?)";
+        return jdbcTemplate.query(sql, new Object[]{origen, destino, combustible}, new RowMapper<CaminoDTO>() {
+            @Override
+            public CaminoDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                CaminoDTO camino = new CaminoDTO();
+
+                // Obtener el array SQL y convertirlo a List<Integer>
+                Array caminoSqlArray = rs.getArray("camino_out");
+                if (caminoSqlArray != null) {
+                    Integer[] caminoArray = (Integer[]) caminoSqlArray.getArray();
+                    camino.setCaminoOut(Arrays.asList(caminoArray));
+                } else {
+                    camino.setCaminoOut(List.of());
+                }
+
+                // Obtener la distancia
+                camino.setDistanciaOut(rs.getInt("distancia_out"));
+
+                return camino;
+            }
+        });
     }
 }
-
-
-
-
