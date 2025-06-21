@@ -1,25 +1,29 @@
 package com.rutas.rutasBack.entidad;
 
-import java.util.List;
-
 public class CaminoDTO {
-    private List<Integer> caminoOut;  // para el array de enteros
-    private int distanciaOut;
+    private String camino;
+    private int distanciaTotal;
 
-    // Getters y setters
-    public List<Integer> getCaminoOut() {
-        return caminoOut;
+    public CaminoDTO() {}
+
+    public CaminoDTO(String camino, int distanciaTotal) {
+        this.camino = camino;
+        this.distanciaTotal = distanciaTotal;
     }
 
-    public void setCaminoOut(List<Integer> caminoOut) {
-        this.caminoOut = caminoOut;
+    public String getCamino() {
+        return camino;
     }
 
-    public int getDistanciaOut() {
-        return distanciaOut;
+    public void setCamino(String camino) {
+        this.camino = camino;
     }
 
-    public void setDistanciaOut(int distanciaOut) {
-        this.distanciaOut = distanciaOut;
+    public int getDistanciaTotal() {
+        return distanciaTotal;
+    }
+
+    public void setDistanciaTotal(int distanciaTotal) {
+        this.distanciaTotal = distanciaTotal;
     }
 }
